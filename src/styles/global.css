@@ -1,0 +1,40 @@
+/* Global reset */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base document styles */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #222222;
+    line-height: 1.6;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Lists */
+ul {
+    list-style: none;
+}
+
+/* Main content */
+main {
+    min-height: 80vh;
+}
+
+section + section {
+    margin-top: 3rem;
+}

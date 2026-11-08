@@ -1,0 +1,110 @@
+
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContentCard from "../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const [blogs, projects, topics] = await Promise.all([
+    getCollection("blog", ({ data }) => !data.draft && data.featured),
+    getCollection("projects", ({ data }) => data.featured),
+    getCollection("topics", ({ data }) => data.featured)
+]);
+
+const featuredBlogs = blogs.slice(0, 3);
+const featuredProjects = projects.slice(0, 3);
+const featuredTopics = topics.slice(0, 3);
+---
+
+<BaseLayout
+    title="Home | Engineering Journal"
+    description="Engineering projects, technical articles and system design."
+>
+    <!-- Hero Section -->
+    <section class="space-y-4">
+        <h1 class="text-4xl font-bold">
+            Engineering Journal
+        </h1>
+
+        <p class="text-xl font-medium text-gray-700">
+            Think. Build. Debug. Document.
+        </p>
+
+        <p class="max-w-2xl leading-relaxed text-gray-600">
+            Exploring software engineering, system design,
+            backend development and artificial intelligence.
+        </p>
+
+        <a
+            href="/blogs"
+            class="inline-block rounded-lg bg-blue-600 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        >
+            Explore Articles →
+        </a>
+    </section>
+
+    <!-- Featured Articles -->
+    {
+        featuredBlogs.length > 0 && (
+            <section>
+                <h2 class="mb-6 text-2xl font-bold">
+                    Featured Articles
+                </h2>
+
+                <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {featuredBlogs.map((post) => (
+                        <ContentCard
+                            title={post.data.title}
+                            description={post.data.description}
+                            href={`/blogs/${post.id}`}
+                            meta={post.data.pubDate.toDateString()}
+                        />
+                    ))}
+                </div>
+            </section>
+        )
+    }
+
+    <!-- Featured Projects -->
+    {
+        featuredProjects.length > 0 && (
+            <section>
+                <h2 class="mb-6 text-2xl font-bold">
+                    Featured Projects
+                </h2>
+
+                <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {featuredProjects.map((project) => (
+                        <ContentCard
+                            title={project.data.title}
+                            description={project.data.description}
+                            href={`/projects/${project.id}`}
+                            meta={project.data.status}
+                        />
+                    ))}
+                </div>
+            </section>
+        )
+    }
+
+    <!-- Featured Topics -->
+    {
+        featuredTopics.length > 0 && (
+            <section>
+                <h2 class="mb-6 text-2xl font-bold">
+                    Featured Topics
+                </h2>
+
+                <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {featuredTopics.map((topic) => (
+                        <ContentCard
+                            title={topic.data.title}
+                            description={topic.data.description}
+                            href={`/topics/${topic.id}`}
+                            meta={topic.data.category}
+                        />
+                    ))}
+                </div>
+            </section>
+        )
+    }
+</BaseLayout>

@@ -1,0 +1,97 @@
+
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+    getCollection,
+    render
+} from "astro:content";
+
+export async function getStaticPaths() {
+    const topics = await getCollection("topics");
+
+    return topics.map((topic) => ({
+        params: {
+            slug: topic.id
+        },
+        props: {
+            topic
+        }
+    }));
+}
+
+const { topic } = Astro.props;
+
+const { Content } = await render(topic);
+
+const [blogs, projects] = await Promise.all([
+    getCollection("blog", ({ data }) => !data.draft),
+    getCollection("projects")
+]);
+
+const relatedBlogs = blogs.filter((blog) =>
+    blog.data.topics.some(
+        (reference) => reference.id === topic.id
+    )
+);
+
+const relatedProjects = projects.filter((project) =>
+    project.data.topics.some(
+        (reference) => reference.id === topic.id
+    )
+);
+---
+
+<BaseLayout
+    title={`${topic.data.title} | Engineering Journal`}
+    description={topic.data.description}
+>
+    <article>
+        <h1>{topic.data.title}</h1>
+
+        <p>{topic.data.description}</p>
+        <p>Category: {topic.data.category}</p>
+
+        <hr />
+
+        <Content />
+
+        <!-- Paste the new sections below Content -->
+
+        <section>
+            <h2>Related Articles</h2>
+
+            {relatedBlogs.length > 0 ? (
+                <ul>
+                    {relatedBlogs.map((blog) => (
+                        <li>
+                            <a href={`/blogs/${blog.id}`}>
+                                {blog.data.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No related articles available.</p>
+            )}
+        </section>
+
+        <section>
+            <h2>Related Projects</h2>
+
+            {relatedProjects.length > 0 ? (
+                <ul>
+                    {relatedProjects.map((project) => (
+                        <li>
+                            <a href={`/projects/${project.id}`}>
+                                {project.data.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No related projects available.</p>
+            )}
+        </section>
+
+    </article>
+</BaseLayout>

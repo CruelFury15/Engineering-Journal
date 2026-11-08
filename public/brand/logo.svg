@@ -1,0 +1,93 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 320" width="1450" height="320" role="img" aria-labelledby="logo-title logo-description">
+
+  <title id="logo-title">Engineering Journal — By ApexFury</title>
+  <desc id="logo-description">
+    Architectural EJ monogram and Engineering Journal wordmark.
+  </desc>
+
+  <defs>
+    <style>
+      .green {
+        fill: #153D32;
+      }
+
+      .sage {
+        fill: #8FA99A;
+      }
+
+      .serif {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 600;
+      }
+
+      .sans {
+        font-family: Arial, sans-serif;
+      }
+    </style>
+  </defs>
+
+  <!-- EJ Architectural Monogram -->
+  <g transform="translate(20 10)">
+
+    <!-- Outer Hexagonal Frame -->
+    <path d="M145 8
+         L275 84
+         V225
+         L145 300
+         L15 225
+         V84 Z" fill="none" stroke="#153D32" stroke-width="12" stroke-linejoin="miter"></path>
+
+    <!-- E Letterform -->
+    <path d="M92 105
+         H193
+         V119
+         H107
+         V160
+         H177
+         V174
+         H107
+         V235
+         H193
+         V249
+         H92 Z" class="green"></path>
+
+    <!-- J Letterform -->
+    <path d="M190 104
+         L238 76
+         V222
+         Q238 248 214 262
+         L190 276
+         L183 264
+         L207 250
+         Q224 240 224 222
+         V100
+         L197 116 Z" class="green"></path>
+
+  </g>
+
+  <!-- Vertical Separator -->
+  <path d="M335 55 V265" stroke="#8FA99A" stroke-width="2"></path>
+
+  <!-- Publication Wordmark -->
+  <text x="385" y="145" class="green serif" font-size="72" letter-spacing="-1.5">
+    Engineering Journal
+  </text>
+
+  <!-- Creator Signature -->
+  <g class="sans" text-anchor="middle">
+
+    <path d="M390 184 H595 M1120 184 H1325" stroke="#8FA99A" stroke-width="2"></path>
+
+    <text x="860" y="194" class="sage" font-size="22" font-weight="600" letter-spacing="8">
+      BY APEXFURY
+    </text>
+
+  </g>
+
+  <!-- Tagline -->
+  <text x="860" y="242" class="green sans" font-size="19" font-weight="500" letter-spacing="4" text-anchor="middle">
+    THINK. BUILD. DEBUG. DOCUMENT.
+  </text>
+
+</svg>

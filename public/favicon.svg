@@ -1,0 +1,46 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+
+  <title>Engineering Journal</title>
+
+  <!-- Background -->
+  <rect width="320" height="320" rx="48" fill="#153D32"></rect>
+
+  <g transform="translate(13 10)">
+
+    <!-- Architectural frame -->
+    <path d="M147 8
+         L275 84
+         V225
+         L147 300
+         L19 225
+         V84 Z" fill="none" stroke="#F5F3EA" stroke-width="12" stroke-linejoin="miter"></path>
+
+    <!-- E structure -->
+    <path d="M92 105
+         H193
+         V119
+         H107
+         V160
+         H177
+         V174
+         H107
+         V235
+         H193
+         V249
+         H92 Z" fill="#F5F3EA"></path>
+
+    <!-- J structure -->
+    <path d="M190 104
+         L238 76
+         V222
+         Q238 248 214 262
+         L190 276
+         L183 264
+         L207 250
+         Q224 240 224 222
+         V100
+         L197 116 Z" fill="#F5F3EA"></path>
+
+  </g>
+</svg>

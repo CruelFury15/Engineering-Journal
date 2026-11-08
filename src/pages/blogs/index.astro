@@ -1,0 +1,116 @@
+
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContentCard from "../../components/ContentCard.astro";
+import { getCollection } from "astro:content";
+
+const POSTS_PER_PAGE = 6;
+
+const posts = await getCollection(
+    "blog",
+    ({ data }) => !data.draft
+);
+
+posts.sort(
+    (a, b) =>
+        b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const featuredPosts = posts
+    .filter((post) => post.data.featured)
+    .slice(0, 3);
+
+const regularPosts = posts.filter(
+    (post) => !post.data.featured
+);
+
+const pagePosts = regularPosts.slice(0, POSTS_PER_PAGE);
+
+const totalPages = Math.ceil(
+    regularPosts.length / POSTS_PER_PAGE
+);
+const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+);
+---
+
+<BaseLayout
+    title="Blogs | Engineering Journal"
+    description="Technical articles and engineering insights."
+>
+    <section>
+        <h1 class="mb-8 text-4xl font-bold">
+            Engineering Articles
+        </h1>
+    </section>
+
+    {
+        featuredPosts.length > 0 && (
+            <section>
+                <h2 class="mb-6 text-2xl font-bold">
+                    Featured Articles
+                </h2>
+
+                <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {featuredPosts.map((post) => (
+                        <ContentCard
+                            title={post.data.title}
+                            description={post.data.description}
+                            href={`/blogs/${post.id}`}
+                            meta={`${post.data.pubDate.toDateString()} · Featured`}
+                        />
+                    ))}
+                </div>
+            </section>
+        )
+    }
+
+    <section>
+        <h2 class="mb-6 text-2xl font-bold">
+            All Articles
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {pagePosts.map((post) => (
+                <ContentCard
+                    title={post.data.title}
+                    description={post.data.description}
+                    href={`/blogs/${post.id}`}
+                    meta={post.data.pubDate.toDateString()}
+                />
+            ))}
+        </div>
+    </section>
+
+    {
+    totalPages > 1 && (
+        <nav
+            aria-label="Article pagination"
+            class="mt-12 flex flex-wrap items-center justify-center gap-2"
+        >
+            {pageNumbers.map((page) => (
+                <a
+                    href={page === 1 ? "/blogs" : `/blogs/page/${page}`}
+                    aria-current={page === 1 ? "page" : undefined}
+                    class:list={[
+                        "rounded-lg border px-4 py-2 text-sm",
+                        page === 1
+                            ? "border-blue-600 bg-blue-600 text-white"
+                            : "border-gray-200 hover:bg-gray-100"
+                    ]}
+                >
+                    {page}
+                </a>
+            ))}
+
+            <a
+                href="/blogs/page/2"
+                class="rounded-lg border border-gray-200 px-4 py-2 text-sm hover:bg-gray-100"
+            >
+                Next →
+            </a>
+        </nav>
+    )
+}
+</BaseLayout>

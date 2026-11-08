@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import ContentCard from "../../components/ContentCard.astro";
+const topics = await getCollection("topics");
+---
+
+<BaseLayout
+    title="Topics | Engineering Journal"
+    description="Explore technical topics and learning resources."
+>
+    <section>
+        <h1>Explore Topics</h1>
+
+        {
+    topics.map((topic) => (
+        <ContentCard
+            title={topic.data.title}
+            description={topic.data.description}
+            href={`/topics/${topic.id}`}
+            meta={topic.data.category}
+        />
+    ))
+}
+    </section>
+</BaseLayout>
