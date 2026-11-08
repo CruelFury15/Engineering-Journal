@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
-    "pagefind": "^1.6.0"
+    "pagefind": "^1.6.0",
+    "wrangler": "^4.158.0"
   }
 }
