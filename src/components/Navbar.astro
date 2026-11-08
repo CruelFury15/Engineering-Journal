@@ -1,75 +1,222 @@
-
 ---
 const navigation = [
-    { label: "Home", href: "/" },
-    { label: "Projects", href: "/projects" },
-    { label: "Blogs", href: "/blogs" },
-    { label: "Topics", href: "/topics" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Search", href: "/search" },
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Topics", href: "/topics" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Search", href: "/search" },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="border-b border-[#E5E9E5] bg-[#F5F3EA]">
-    <nav
-        class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-4 py-4 sm:flex-row sm:px-6"
-        aria-label="Main navigation"
+  <nav
+    class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:py-4 lg:flex-row lg:px-6"
+    aria-label="Main navigation"
+  >
+    <!-- Brand -->
+    <a
+      href="/"
+      class="flex shrink-0 items-center gap-3"
+      aria-label="Engineering Journal home"
     >
-        <!-- Brand Identity -->
-        <a
-            href="/"
-            class="flex shrink-0 items-center gap-3"
-            aria-label="Engineering Journal home"
-        >
-            <img
-                src="/favicon.svg"
-                alt=""
-                width="44"
-                height="44"
-                class="h-11 w-11"
-            />
+      <img
+        src="/favicon.svg"
+        alt=""
+        width="44"
+        height="44"
+        class="h-10 w-10 sm:h-11 sm:w-11"
+      />
 
-            <span class="flex flex-col">
-                <span class="font-serif text-xl font-semibold tracking-tight text-[#153D32]">
-                    Engineering Journal
-                </span>
+      <span class="flex flex-col">
+        <span class="font-serif text-lg font-semibold tracking-tight text-[#153D32] sm:text-xl">
+          Engineering Journal
+        </span>
 
-                <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#526B5C]">
-                    By ApexFury
-                </span>
-            </span>
-        </a>
+        <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#526B5C]">
+          By ApexFury
+        </span>
+      </span>
+    </a>
 
-        <!-- Navigation Links -->
-        <ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
-            {navigation.map((item) => {
-                const isActive =
-                    currentPath === item.href ||
-                    (
-                        item.href !== "/" &&
-                        currentPath.startsWith(`${item.href}/`)
-                    );
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[#D5DDD5] text-[#153D32] transition-colors hover:bg-[#E9EDE6] lg:hidden"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+    >
+      <svg
+        id="menu-open-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
 
-                return (
-                    <li>
-                        <a
-    href={item.href}
-    aria-current={isActive ? "page" : undefined}
-    class:list={[
-        "border-b-2 pb-1 text-sm font-medium transition-colors duration-200",
-        isActive
-            ? "border-[#153D32] text-[#153D32]"
-            : "border-transparent text-gray-600 hover:border-[#8FA99A] hover:text-[#153D32]",
-    ]}
->
-    {item.label}
-</a>
-                    </li>
-                );
-            })}
-        </ul>
-    </nav>
+      <svg
+        id="menu-close-icon"
+        class="hidden"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="m18 6-12 12M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Desktop navigation -->
+    <ul id="desktop-navigation" class="hidden items-center gap-5 lg:flex">
+      {navigation.map((item) => {
+        const isActive =
+          currentPath === item.href ||
+          (
+            item.href !== "/" &&
+            currentPath.startsWith(`${item.href}/`)
+          );
+
+        return (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive ? "page" : undefined}
+              class:list={[
+                "border-b-2 pb-1 text-sm font-medium transition-colors duration-200",
+                isActive
+                  ? "border-[#153D32] text-[#153D32]"
+                  : "border-transparent text-gray-700 hover:border-[#526B5C] hover:text-[#153D32]",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Mobile navigation -->
+    <ul
+      id="mobile-navigation"
+      class="hidden w-full grid-cols-2 gap-2 border-t border-[#E5E9E5] px-2 pt-3 lg:hidden"
+    >
+      {navigation.map((item) => {
+        const isActive =
+          currentPath === item.href ||
+          (
+            item.href !== "/" &&
+            currentPath.startsWith(`${item.href}/`)
+          );
+
+        return (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive ? "page" : undefined}
+              class:list={[
+                "block rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-[#E2EAE1] text-[#153D32]"
+                  : "text-gray-700 hover:bg-[#E9EDE6] hover:text-[#153D32]",
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
 </header>
+
+
+
+<script>
+  const buttonElement = document.querySelector("#mobile-menu-button");
+  const menuElement = document.querySelector("#mobile-navigation");
+  const openIconElement = document.querySelector("#menu-open-icon");
+  const closeIconElement = document.querySelector("#menu-close-icon");
+
+  if (
+    buttonElement instanceof HTMLButtonElement &&
+    menuElement instanceof HTMLUListElement &&
+    openIconElement instanceof SVGElement &&
+    closeIconElement instanceof SVGElement
+  ) {
+    const button: HTMLButtonElement = buttonElement;
+    const menu: HTMLUListElement = menuElement;
+    const openIcon: SVGElement = openIconElement;
+    const closeIcon: SVGElement = closeIconElement;
+
+    function setMenuOpen(open: boolean) {
+      button.setAttribute("aria-expanded", String(open));
+      button.setAttribute(
+        "aria-label",
+        open ? "Close navigation menu" : "Open navigation menu"
+      );
+
+      menu.classList.toggle("hidden", !open);
+      menu.classList.toggle("grid", open);
+
+      openIcon.classList.toggle("hidden", open);
+      closeIcon.classList.toggle("hidden", !open);
+    }
+
+    button.addEventListener("click", () => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      setMenuOpen(!isOpen);
+    });
+
+    menu.addEventListener("click", (event) => {
+      if (
+        event.target instanceof Element &&
+        event.target.closest("a")
+      ) {
+        setMenuOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        button.getAttribute("aria-expanded") === "true"
+      ) {
+        setMenuOpen(false);
+        button.focus();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 1024) {
+        const activeElement = document.activeElement;
+        const focusWasInMobileNavigation =
+          menu.contains(activeElement) || button === activeElement;
+
+        setMenuOpen(false);
+
+        if (focusWasInMobileNavigation) {
+          document
+            .querySelector<HTMLAnchorElement>(
+              "#desktop-navigation a"
+            )
+            ?.focus();
+        }
+      }
+    });
+  }
+</script>
