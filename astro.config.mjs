@@ -4,7 +4,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-    site: "https://your-domain.com",
+    site: "https://engineering-journal.apexfury.workers.dev",
 
     integrations: [
     mdx(),
